@@ -22,11 +22,11 @@
     "typeorm-example"
   ],
   "devDependencies": {
-    "typescript": "^2.0.2"
+    "typescript": "^2.1.5"
   },
   "dependencies": {
     "pg": "^6.1.0",
-    "reflect-metadata": "^0.1.8",
-    "typeorm": "0.0.5"
+    "reflect-metadata": "^0.1.9",
+    "typeorm": "0.0.8"
   }
 }
