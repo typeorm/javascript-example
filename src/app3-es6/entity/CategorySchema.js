@@ -1,5 +1,6 @@
-const Category = require("../model/Category"); // import {Category} from "../model/Category";
-const CategorySchema = {
+const Category = require("../model/Category").Category; // import {Category} from "../model/Category";
+
+module.exports = {
     target: Category,
     columns: {
         id: {
@@ -8,11 +9,7 @@ const CategorySchema = {
             generated: true
         },
         name: {
-            type: "string"
+            type: "varchar"
         }
     }
-};
-
-module.exports = {
-    CategorySchema: CategorySchema
 };

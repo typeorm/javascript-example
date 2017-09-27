@@ -1,40 +1,47 @@
 const typeorm = require("typeorm"); // import * as typeorm from "typeorm";
-const Post = require("./model/Post"); // import {Post} from "./model/Post";
-const Category = require("./model/Category"); // import {Category} from "./model/Category";
+const Post = require("./model/Post").Post; // import {Post} from "./model/Post";
+const Category = require("./model/Category").Category; // import {Category} from "./model/Category";
 
 typeorm.createConnection({
-    driver: {
-        type: "postgres",
-        host: "localhost",
-        port: 5432,
-        username: "test",
-        password: "admin",
-        database: "test"
-    },
-    entities: [
-        __dirname + "/entity/*.js"
-    ],
-    autoSchemaSync: true
+    type: "mysql",
+    host: "localhost",
+    port: 3306,
+    username: "test",
+    password: "test",
+    database: "test",
+    synchronize: true,
+    logging: false,
+    entitySchemas: [
+        require("./entity/PostSchema"),
+        require("./entity/CategorySchema")
+    ]
 }).then(function (connection) {
-    console.log(connection);
 
-    let post = new Post();
-    post.title = "Control flow based type analysis";
-    post.text = "TypeScript 2.0 implements a control flow-based type analysis for local variables and parameters.";
-    post.categories = [new Category(0, "TypeScript"), new Category(0, "Programming")];
+    const category1 = new Category(0, "TypeScript");
+    const category2 = new Category(0, "Programming");
 
-    let postRepository = connection.getRepository(Post);
-    postRepository.persist(post)
-        .then(function(savedPost) {
-            console.log("Post has been saved: ", savedPost);
-            console.log("Now lets load all posts: ");
+    return connection
+        .manager
+        .save([category1, category2])
+        .then(() => {
 
-            return postRepository.find();
-        })
-        .then(function(allPosts) {
-            console.log("All posts: ", allPosts);
+            let post = new Post();
+            post.title = "Control flow based type analysis";
+            post.text = "TypeScript 2.0 implements a control flow-based type analysis for local variables and parameters.";
+            post.categories = [category1, category2];
+
+            let postRepository = connection.getRepository(Post);
+            postRepository.save(post)
+                .then(function(savedPost) {
+                    console.log("Post has been saved: ", savedPost);
+                    console.log("Now lets load all posts: ");
+
+                    return postRepository.find();
+                })
+                .then(function(allPosts) {
+                    console.log("All posts: ", allPosts);
+                });
         });
-
 
 }).catch(function(error) {
     console.log("Error: ", error);

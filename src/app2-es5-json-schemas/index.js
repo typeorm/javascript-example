@@ -1,18 +1,16 @@
 var typeorm = require("typeorm");
 
 typeorm.createConnection({
-    driver: {
-        type: "postgres",
-        host: "localhost",
-        port: 5432,
-        username: "test",
-        password: "admin",
-        database: "test"
-    },
+    type: "mysql",
+    host: "localhost",
+    port: 3306,
+    username: "test",
+    password: "test",
+    database: "test",
+    synchronize: true,
     entitySchemas: [
         __dirname + "/entity/*.json"
-    ],
-    autoSchemaSync: true
+    ]
 }).then(function (connection) {
 
     var category1 = {
@@ -31,7 +29,7 @@ typeorm.createConnection({
     };
 
     var postRepository = connection.getRepository("Post");
-    postRepository.persist(post)
+    postRepository.save(post)
         .then(function(savedPost) {
             console.log("Post has been saved: ", savedPost);
             console.log("Now lets load all posts: ");

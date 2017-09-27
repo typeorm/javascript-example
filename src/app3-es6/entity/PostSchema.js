@@ -1,6 +1,7 @@
-const Post = require("../model/Post"); // import {Post} from "../model/Post";
-const Category = require("../model/Category"); // import {Category} from "../model/Category";
-const PostSchema = {
+const Post = require("../model/Post").Post; // import {Post} from "../model/Post";
+const Category = require("../model/Category").Category; // import {Category} from "../model/Category";
+
+module.exports = {
     target: Post,
     columns: {
         id: {
@@ -9,7 +10,7 @@ const PostSchema = {
             generated: true
         },
         title: {
-            type: "string"
+            type: "varchar"
         },
         text: {
             type: "text"
@@ -17,14 +18,10 @@ const PostSchema = {
     },
     relations: {
         categories: {
-            target: Category,
+            target: () => Category,
             type: "many-to-many",
             joinTable: true,
             cascadeInsert: true
         }
     }
-};
-
-module.exports = {
-    PostSchema: PostSchema
 };

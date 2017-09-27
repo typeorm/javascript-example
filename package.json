@@ -21,12 +21,9 @@
     "typeorm-sample",
     "typeorm-example"
   ],
-  "devDependencies": {
-    "typescript": "^2.1.5"
-  },
   "dependencies": {
-    "pg": "^6.1.0",
-    "reflect-metadata": "^0.1.9",
-    "typeorm": "0.0.8"
+    "mysql": "^2.14.1",
+    "reflect-metadata": "^0.1.10",
+    "typeorm": "0.1.0-alpha.49"
   }
 }

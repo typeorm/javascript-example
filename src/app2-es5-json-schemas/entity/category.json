@@ -7,7 +7,7 @@
             "generated": true
         },
         "name": {
-            "type": "string"
+            "type": "varchar"
         }
     }
 }

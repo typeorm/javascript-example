@@ -7,7 +7,7 @@ module.exports = {
             generated: true
         },
         name: {
-            type: "string"
+            type: "varchar"
         }
     }
 };
