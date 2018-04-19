@@ -18,7 +18,7 @@ module.exports = {
             target: "Category",
             type: "many-to-many",
             joinTable: true,
-            cascadeInsert: true
+            cascade: true
         }
     }
 };
