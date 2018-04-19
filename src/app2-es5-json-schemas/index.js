@@ -1,4 +1,5 @@
 var typeorm = require("typeorm");
+var EntitySchema = typeorm.EntitySchema;
 
 typeorm.createConnection({
     type: "mysql",
@@ -8,8 +9,9 @@ typeorm.createConnection({
     password: "test",
     database: "test",
     synchronize: true,
-    entitySchemas: [
-        __dirname + "/entity/*.json"
+    entities: [
+        new EntitySchema(require("./entity/post.json")),
+        new EntitySchema(require("./entity/category.json")),
     ]
 }).then(function (connection) {
 

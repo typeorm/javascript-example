@@ -11,7 +11,7 @@ typeorm.createConnection({
     database: "test",
     synchronize: true,
     logging: false,
-    entitySchemas: [
+    entities: [
         require("./entity/PostSchema"),
         require("./entity/CategorySchema")
     ]
