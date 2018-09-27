@@ -2,7 +2,7 @@ const EntitySchema = require("typeorm").EntitySchema; // import {EntitySchema} f
 const Post = require("../model/Post").Post; // import {Post} from "../model/Post";
 const Category = require("../model/Category").Category; // import {Category} from "../model/Category";
 
-module.exports = new EntitySchema({
+/*export */ const PostSchema = new EntitySchema({
     name: "Post",
     target: Post,
     columns: {
@@ -27,3 +27,7 @@ module.exports = new EntitySchema({
         }
     }
 });
+
+module.exports = {
+    PostSchema: PostSchema
+};

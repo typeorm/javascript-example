@@ -1,7 +1,7 @@
 const EntitySchema = require("typeorm").EntitySchema; // import {EntitySchema} from "typeorm";
 const Category = require("../model/Category").Category; // import {Category} from "../model/Category";
 
-module.exports = new EntitySchema({
+/*export */ const CategorySchema = new EntitySchema({
     name: "Category",
     target: Category,
     columns: {
@@ -15,3 +15,7 @@ module.exports = new EntitySchema({
         }
     }
 });
+
+module.exports = {
+    CategorySchema: CategorySchema
+};
