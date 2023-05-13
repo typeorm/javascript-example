@@ -22,7 +22,8 @@
     "typeorm-example"
   ],
   "dependencies": {
-    "mysql": "^2.15.0",
-    "typeorm": "^0.2.0"
+    "better-sqlite3": "^8.3.0",
+    "mysql": "^2.18.1",
+    "typeorm": "^0.3.15"
   }
 }

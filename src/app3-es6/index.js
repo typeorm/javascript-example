@@ -1,48 +1,33 @@
-const typeorm = require("typeorm"); // import * as typeorm from "typeorm";
-const Post = require("./model/Post").Post; // import {Post} from "./model/Post";
-const Category = require("./model/Category").Category; // import {Category} from "./model/Category";
+import { DataSource } from "typeorm";
 
-typeorm.createConnection({
-    type: "mysql",
-    host: "localhost",
-    port: 3306,
-    username: "test",
-    password: "test",
-    database: "test",
-    synchronize: true,
-    logging: false,
-    entities: [
-        require("./entity/PostSchema"),
-        require("./entity/CategorySchema")
-    ]
-}).then(function (connection) {
+import Post from "./model/Post.js";
+import Category from "./model/Category.js";
 
-    const category1 = new Category(0, "TypeScript");
-    const category2 = new Category(0, "Programming");
-
-    return connection
-        .manager
-        .save([category1, category2])
-        .then(() => {
-
-            let post = new Post();
-            post.title = "Control flow based type analysis";
-            post.text = "TypeScript 2.0 implements a control flow-based type analysis for local variables and parameters.";
-            post.categories = [category1, category2];
-
-            let postRepository = connection.getRepository(Post);
-            postRepository.save(post)
-                .then(function(savedPost) {
-                    console.log("Post has been saved: ", savedPost);
-                    console.log("Now lets load all posts: ");
-
-                    return postRepository.find();
-                })
-                .then(function(allPosts) {
-                    console.log("All posts: ", allPosts);
-                });
-        });
-
-}).catch(function(error) {
-    console.log("Error: ", error);
+const dataSource = new DataSource({
+  type: "better-sqlite3",
+  database: "app3-es6.db",
+  synchronize: true,
+  logging: false,
+  entities: [Post.schema, Category.schema],
 });
+
+await dataSource.initialize();
+
+const category1 = new Category(1, "TypeScript");
+const category2 = new Category(2, "Programming");
+
+await Category.save([category1, category2]);
+
+const post = new Post();
+post.title = "Control flow based type analysis";
+post.text =
+  "TypeScript 2.0 implements a control flow-based type analysis for local variables and parameters.";
+post.categories = [category1, category2];
+
+const savedPost = await post.save();
+console.log("Post has been saved: ", savedPost);
+console.log("Now lets load all posts: ");
+
+const allPosts = await Post.find({ relations: { categories: true } });
+
+console.log("All posts: ", allPosts);
